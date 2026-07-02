@@ -34,5 +34,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  JobDozo-data:
+  Jobdozo-data:
   mongo-data:
