@@ -3,10 +3,10 @@
 import { GlassCard } from "@/components/ui/GlassCard";
 import { StatCard } from "@/components/ui/StatCard";
 import { PageSkeleton } from "@/components/ui/Skeleton";
-import { usePortalData } from "@/context/PortalDataContext";
+import { useEmployerData } from "@/context/EmployerDataContext";
 
 export default function DashboardPage() {
-  const { loading, dashboard } = usePortalData();
+  const { loading, dashboard } = useEmployerData();
   if (loading || !dashboard) return <PageSkeleton />;
   const stats = dashboard.stats as Record<string, number>;
   const progress = dashboard.hiringProgress as Record<string, number>;

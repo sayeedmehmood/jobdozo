@@ -1,15 +1,15 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_ITEMS } from "@/lib/nav";
-import { usePortalData } from "@/context/PortalDataContext";
+import { useEmployerData } from "@/context/EmployerDataContext";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
 
 export function Sidebar({ mobileOpen, onClose }: { mobileOpen: boolean; onClose: () => void }) {
   const pathname = usePathname();
-  const { badges } = usePortalData();
+  const { badges } = useEmployerData();
   const { user } = useAuth();
   const initials = (user?.company || user?.name || "EM").split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 
@@ -45,7 +45,7 @@ export function Sidebar({ mobileOpen, onClose }: { mobileOpen: boolean; onClose:
         <div className="sidebar-boost employer-boost">
           <div>
             <strong>Boost Your Jobs</strong>
-            <small>Get 3× more quality applications</small>
+            <small>Get 3� more quality applications</small>
             <Link href="/subscription" className="boost-btn" onClick={onClose}>Upgrade</Link>
           </div>
           <i className="fa-solid fa-rocket" />
