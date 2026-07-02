@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+echo "Starting deployment..."
+apt-get update -y
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+apt-get install -y nodejs git
+npm install -g pm2
+rm -rf /opt/jobdozo
+git clone https://github.com/sayeedmehmood/jobdozo.git /opt/jobdozo
+cd /opt/jobdozo
+npm install
+npm run build:portals
+pm2 delete jobdozo || true
+pm2 start server/index.js --name "jobdozo" --update-env
+pm2 save
+env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u root --hp /root || true
+echo "Deployment successful!"
