@@ -1,0 +1,282 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JobDozo Admin Panel — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="stylesheet" href="css/admin.css" />
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="icon" href="assets/icon.png" type="image/png" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body data-role="admin">
+
+<!-- ============ SIDEBAR ============ -->
+<aside class="sidebar" id="sidebar">
+  <a class="sb-brand" href="index.html" title="Back to JobDozo site">
+    <span class="brand-icon"><img src="assets/icon.png" alt="JobDozo" /></span>
+    <span class="sb-brand-text">
+      <strong>Job<em>Dozo</em></strong>
+      <small>Admin Panel</small>
+    </span>
+  </a>
+
+  <nav class="sb-nav">
+    <a class="sb-item active" data-page="Dashboard"><i class="fa-solid fa-table-columns"></i><span>Dashboard</span></a>
+
+    <div class="sb-group" data-open="true">
+      <a class="sb-item has-sub"><i class="fa-solid fa-users"></i><span>Users</span><i class="fa-solid fa-chevron-down caret"></i></a>
+      <div class="sb-sub">
+        <a class="sb-subitem" data-page="Job Seekers">Job Seekers</a>
+        <a class="sb-subitem" data-page="Employers">Employers</a>
+        <a class="sb-subitem" data-page="Administrators">Administrators</a>
+      </div>
+    </div>
+
+    <div class="sb-group" data-open="true">
+      <a class="sb-item has-sub"><i class="fa-solid fa-briefcase"></i><span>Jobs</span><i class="fa-solid fa-chevron-down caret"></i></a>
+      <div class="sb-sub">
+        <a class="sb-subitem" data-page="All Jobs">All Jobs</a>
+        <a class="sb-subitem" data-page="Pending Approval">Pending Approval</a>
+        <a class="sb-subitem" data-page="Expired Jobs">Expired Jobs</a>
+        <a class="sb-subitem" data-page="Reported Jobs">Reported Jobs</a>
+      </div>
+    </div>
+
+    <a class="sb-item" data-page="Applications"><i class="fa-regular fa-file-lines"></i><span>Applications</span></a>
+    <a class="sb-item" data-page="Employers"><i class="fa-regular fa-building"></i><span>Employers</span></a>
+    <a class="sb-item" data-page="Job Seekers"><i class="fa-regular fa-id-badge"></i><span>Job Seekers</span></a>
+    <a class="sb-item" data-page="Categories"><i class="fa-solid fa-layer-group"></i><span>Categories</span></a>
+    <a class="sb-item" data-page="Locations"><i class="fa-solid fa-location-dot"></i><span>Locations</span></a>
+    <a class="sb-item" data-page="Payments"><i class="fa-regular fa-credit-card"></i><span>Payments</span></a>
+    <a class="sb-item" data-page="Subscriptions"><i class="fa-solid fa-crown"></i><span>Subscriptions</span></a>
+    <a class="sb-item" data-page="Reviews & Ratings"><i class="fa-regular fa-star"></i><span>Reviews &amp; Ratings</span></a>
+    <a class="sb-item" data-page="Reports & Analytics"><i class="fa-solid fa-chart-line"></i><span>Reports &amp; Analytics</span></a>
+
+    <div class="sb-group">
+      <a class="sb-item has-sub"><i class="fa-regular fa-newspaper"></i><span>CMS</span><i class="fa-solid fa-chevron-down caret"></i></a>
+      <div class="sb-sub">
+        <a class="sb-subitem" data-page="Pages">Pages</a>
+        <a class="sb-subitem" data-page="Blogs">Blogs</a>
+        <a class="sb-subitem" data-page="Banners">Banners</a>
+      </div>
+    </div>
+
+    <a class="sb-item" data-page="Settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+    <a class="sb-item" data-page="Support Tickets"><i class="fa-regular fa-life-ring"></i><span>Support Tickets</span></a>
+  </nav>
+
+  <div class="sb-help">
+    <strong>Need Help?</strong>
+    <small>Contact Support</small>
+    <button id="createTicketBtn">Create Ticket</button>
+  </div>
+</aside>
+
+<!-- ============ MAIN ============ -->
+<div class="admin-main" id="adminMain">
+
+  <!-- TOPBAR -->
+  <header class="admin-topbar">
+    <button class="tb-burger" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+
+    <div class="tb-right">
+      <div class="tb-search">
+        <input type="text" id="adminSearch" placeholder="Search anything..." />
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+
+      <button class="tb-icon" id="adminNotifBtn" title="Notifications">
+        <i class="fa-regular fa-bell"></i><span class="tb-badge" id="adminNotifBadge">6</span>
+      </button>
+      <div class="adropdown" id="adminNotifDropdown">
+        <div class="ad-head">Notifications <a href="#" id="adminMarkRead">Mark all read</a></div>
+        <div id="adminNotifList"></div>
+      </div>
+
+      <button class="tb-icon" id="fullscreenBtn" title="Fullscreen"><i class="fa-solid fa-expand"></i></button>
+
+      <div class="tb-profile" id="adminProfileBtn">
+        <div class="tb-avatar">A</div>
+        <div class="tb-prof-text"><strong>Admin</strong><small>Super Admin</small></div>
+        <i class="fa-solid fa-chevron-down tiny"></i>
+        <div class="adropdown" id="adminProfileDropdown">
+          <a class="ad-item"><i class="fa-regular fa-user"></i> My Profile</a>
+          <a class="ad-item"><i class="fa-solid fa-gear"></i> Account Settings</a>
+          <a class="ad-item"><i class="fa-regular fa-circle-question"></i> Help Center</a>
+          <a class="ad-item danger" id="adminLogout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="admin-content">
+
+    <!-- Page head -->
+    <div class="page-head">
+      <div>
+        <h1 id="pageTitle">Dashboard</h1>
+        <div class="breadcrumb">Home <i class="fa-solid fa-chevron-right"></i> <span id="crumbCurrent">Dashboard</span></div>
+      </div>
+      <button class="date-range" id="dateRangeBtn">
+        <span id="dateRangeText">May 20, 2024 – Jun 20, 2024</span>
+        <i class="fa-regular fa-calendar"></i>
+      </button>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="stats-row" id="statsRow"></div>
+
+    <!-- Row: chart + donut + activities -->
+    <div class="grid-row main-row">
+      <div class="panel chart-panel">
+        <div class="panel-head">
+          <h3>Job Applications Overview</h3>
+          <select id="chartRange" class="mini-select">
+            <option value="30">Last 30 Days</option>
+            <option value="14">Last 14 Days</option>
+            <option value="7">Last 7 Days</option>
+          </select>
+        </div>
+        <div class="chart-wrap"><canvas id="appsChart"></canvas></div>
+      </div>
+
+      <div class="panel donut-panel">
+        <div class="panel-head"><h3>Jobs by Category</h3></div>
+        <div class="donut-wrap">
+          <canvas id="catChart"></canvas>
+          <div class="donut-center"><strong>8,745</strong><small>Total</small></div>
+        </div>
+        <div class="donut-legend" id="catLegend"></div>
+        <a class="panel-link" id="viewAllCategories">View All Categories</a>
+      </div>
+
+      <div class="panel activity-panel">
+        <div class="panel-head"><h3>Recent Activities</h3></div>
+        <div class="activity-list" id="activityList"></div>
+        <a class="panel-link" id="viewAllActivities">View All Activities</a>
+      </div>
+    </div>
+
+    <!-- Row: table + right widgets -->
+    <div class="grid-row table-row">
+      <div class="panel table-panel">
+        <div class="panel-head">
+          <h3>Latest Job Postings</h3>
+          <a class="panel-link" id="viewAllJobsTop">View All Jobs</a>
+        </div>
+        <div class="table-scroll">
+          <table class="jobs-table">
+            <thead>
+              <tr>
+                <th>Job Title</th><th>Employer</th><th>Category</th><th>Location</th><th>Posted On</th><th>Status</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="jobsTbody"></tbody>
+          </table>
+        </div>
+        <div class="table-foot"><a class="panel-link" id="viewAllJobsBottom">View All Jobs</a></div>
+      </div>
+
+      <div class="right-widgets">
+        <div class="panel qa-panel">
+          <div class="panel-head"><h3>Quick Actions</h3></div>
+          <div class="qa-grid">
+            <button class="qa-btn" data-qa="Add New Job"><i class="fa-solid fa-plus"></i> Add New Job</button>
+            <button class="qa-btn" data-qa="Add Employer"><i class="fa-solid fa-building-user"></i> Add Employer</button>
+            <button class="qa-btn" data-qa="Add Admin"><i class="fa-solid fa-user-shield"></i> Add Admin</button>
+            <button class="qa-btn" data-qa="Manage Categories"><i class="fa-solid fa-layer-group"></i> Manage Categories</button>
+            <button class="qa-btn" data-qa="Manage Locations"><i class="fa-solid fa-map-location-dot"></i> Manage Locations</button>
+            <button class="qa-btn" data-qa="View Reports"><i class="fa-solid fa-chart-column"></i> View Reports</button>
+          </div>
+        </div>
+
+        <div class="panel sys-panel">
+          <div class="panel-head"><h3>System Overview</h3></div>
+          <div class="sys-row"><span>Server Status</span><b class="ok">● Online</b></div>
+          <div class="sys-row"><span>Database</span><b class="ok">● Healthy</b></div>
+          <div class="sys-row storage">
+            <span>Storage Used</span>
+            <div class="sys-bar"><div class="sys-fill" style="width:67%"></div></div>
+            <b>67%</b>
+          </div>
+          <div class="sys-row"><span>Active Sessions</span><b id="activeSessions">245</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row: mini stats -->
+    <div class="grid-row bottom-row">
+      <div class="panel mini-panel">
+        <h3>Users by Role</h3>
+        <div class="mini-flex">
+          <div class="mini-legend">
+            <div><i style="background:#3b82f6"></i> Job Seekers <b>10,102 (81%)</b></div>
+            <div><i style="background:#22c55e"></i> Employers <b>2,356 (19%)</b></div>
+          </div>
+          <div class="mini-donut"><canvas id="roleChart"></canvas></div>
+        </div>
+        <a class="panel-link" data-detail="Users by Role">View Details</a>
+      </div>
+
+      <div class="panel mini-panel">
+        <h3>Jobs by Status</h3>
+        <div class="mini-flex">
+          <div class="mini-legend">
+            <div><i style="background:#22c55e"></i> Active <b>6,245 (71%)</b></div>
+            <div><i style="background:#f59e0b"></i> Pending <b>1,245 (14%)</b></div>
+            <div><i style="background:#ef4444"></i> Expired <b>1,255 (15%)</b></div>
+          </div>
+          <div class="mini-donut"><canvas id="statusChart"></canvas></div>
+        </div>
+        <a class="panel-link" data-detail="Jobs by Status">View Details</a>
+      </div>
+
+      <div class="panel mini-panel">
+        <h3>Applications by Status</h3>
+        <div class="mini-flex">
+          <div class="mini-legend">
+            <div><i style="background:#3b82f6"></i> Applied <b>15,245 (66%)</b></div>
+            <div><i style="background:#8b5cf6"></i> Shortlisted <b>4,215 (18%)</b></div>
+            <div><i style="background:#ef4444"></i> Rejected <b>2,104 (9%)</b></div>
+            <div><i style="background:#22c55e"></i> Selected <b>1,540 (7%)</b></div>
+          </div>
+          <div class="mini-donut"><canvas id="appStatusChart"></canvas></div>
+        </div>
+        <a class="panel-link" data-detail="Applications by Status">View Details</a>
+      </div>
+
+      <div class="panel mini-panel revenue-panel">
+        <h3>Revenue Overview</h3>
+        <div class="rev-nums">
+          <div><small>This Month</small><strong>₹12,45,300</strong></div>
+          <div><small>Last Month</small><strong class="muted">₹10,72,450</strong></div>
+        </div>
+        <div class="rev-trend"><i class="fa-solid fa-arrow-trend-up"></i> 16.1% Increased</div>
+        <div class="rev-chart"><canvas id="revChart"></canvas></div>
+        <a class="panel-link" data-detail="Revenue Overview">View Financial Report</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============ MODALS ============ -->
+<div class="amodal-overlay" id="amodalOverlay">
+  <div class="amodal" id="amodal">
+    <button class="amodal-close" id="amodalClose"><i class="fa-solid fa-xmark"></i></button>
+    <div id="amodalBody"></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

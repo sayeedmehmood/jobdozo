@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JobDozo — Sign In</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; font-family: Inter, system-ui, sans-serif; background: linear-gradient(135deg, #0f172a, #1e3a8a); display: grid; place-items: center; padding: 20px; color: #334155; }
+    .card { width: 100%; max-width: 420px; background: #fff; border-radius: 20px; padding: 32px; box-shadow: 0 30px 80px rgba(0,0,0,.35); }
+    h1 { margin: 0 0 6px; font-size: 1.5rem; text-align: center; color: #0f172a; }
+    p.sub { text-align: center; color: #64748b; font-size: .9rem; margin: 0 0 24px; }
+    label { display: block; font-size: .75rem; font-weight: 700; margin-bottom: 6px; color: #334155; }
+    input, select { width: 100%; padding: 12px 14px; border: 1.5px solid #e2e8f0; border-radius: 10px; margin-bottom: 14px; font: inherit; }
+    button { width: 100%; padding: 12px; border: none; border-radius: 10px; background: #1a6cf5; color: #fff; font-weight: 700; cursor: pointer; font-size: .95rem; }
+    button:hover { background: #0d4fc4; }
+    .err { color: #dc2626; font-size: .8rem; font-weight: 600; margin: 0 0 12px; }
+    .demos { margin-top: 20px; display: grid; gap: 8px; }
+    .demos button { background: #f1f5f9; color: #334155; font-size: .78rem; padding: 10px; }
+    .demos button:hover { background: #e2e8f0; }
+    .brand { text-align: center; margin-bottom: 20px; font-size: 1.8rem; font-weight: 900; color: #1a6cf5; }
+    .brand em { font-style: normal; color: #0f172a; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">Job<em>Dozo</em></div>
+    <h1>Sign in to your portal</h1>
+    <p class="sub">You’ll be redirected based on your account role</p>
+    <form id="form">
+      <label>Email</label>
+      <input type="email" id="email" required placeholder="you@example.com" />
+      <label>Password</label>
+      <input type="password" id="password" required placeholder="••••••••" />
+      <p class="err" id="err" hidden></p>
+      <button type="submit" id="btn">Sign In</button>
+    </form>
+    <div class="demos">
+      <button type="button" data-e="rahul@gmail.com" data-p="rahul123">Demo: Job Seeker</button>
+      <button type="button" data-e="hr@techcorp.in" data-p="employer123">Demo: Employer</button>
+      <button type="button" data-e="recruiter@jobdozo.in" data-p="recruiter123">Demo: Recruiter</button>
+      <button type="button" data-e="admin@jobdozo.in" data-p="admin123">Demo: Admin</button>
+      <button type="button" data-e="super@jobdozo.in" data-p="super123">Demo: Super Admin</button>
+    </div>
+  </div>
+  <script>
+    const ROLE_HOME = {
+      seeker: "/seeker/dashboard",
+      employer: "/employer/dashboard",
+      recruiter: "/recruiter/dashboard",
+      admin: "/admin/dashboard",
+      "super-admin": "/super-admin/dashboard",
+    };
+    const TOKEN_KEYS = {
+      seeker: ["jm_seeker_token", "jm_seeker_user"],
+      employer: ["jm_employer_token", "jm_employer_user"],
+      recruiter: ["jm_recruiter_token", "jm_recruiter_user"],
+      admin: ["jm_admin_token", "jm_admin_user"],
+      "super-admin": ["jm_super_admin_token", "jm_super_admin_user"],
+    };
+    function setSession(role, token, user) {
+      const [tk, uk] = TOKEN_KEYS[role] || ["jm_token", "jm_user"];
+      localStorage.setItem(tk, token);
+      localStorage.setItem(uk, JSON.stringify(user));
+    }
+    async function login(email, password) {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Login failed");
+      const home = ROLE_HOME[data.user.role];
+      if (!home) throw new Error("Unknown role: " + data.user.role);
+      setSession(data.user.role, data.token, data.user);
+      window.location.href = home;
+    }
+    document.getElementById("form").onsubmit = async (e) => {
+      e.preventDefault();
+      const err = document.getElementById("err");
+      const btn = document.getElementById("btn");
+      err.hidden = true;
+      btn.disabled = true;
+      btn.textContent = "Signing in...";
+      try {
+        await login(document.getElementById("email").value, document.getElementById("password").value);
+      } catch (ex) {
+        err.textContent = ex.message;
+        err.hidden = false;
+        btn.disabled = false;
+        btn.textContent = "Sign In";
+      }
+    };
+    document.querySelectorAll(".demos button").forEach((b) => {
+      b.onclick = () => {
+        document.getElementById("email").value = b.dataset.e;
+        document.getElementById("password").value = b.dataset.p;
+      };
+    });
+  </script>
+</body>
+</html>

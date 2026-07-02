@@ -1,0 +1,660 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1a6cf5" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>JobDozo — Find Your Dream Job Near You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/mobile.css" />
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="icon" href="assets/icon.png" type="image/png" />
+</head>
+<body>
+
+<div class="desktop-shell">
+
+<!-- ================= TOP HEADER ================= -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#" id="brandLogo">
+      <span class="brand-icon"><img src="assets/icon.png" alt="JobDozo" /></span>
+      <span class="brand-name">Job<span>Dozo</span></span>
+    </a>
+
+    <div class="header-search">
+      <i class="fa-solid fa-magnifying-glass hs-icon"></i>
+      <input type="text" id="headerSearchInput" placeholder="Search for job title, skills or company" />
+      <div class="hs-location" id="headerLocBtn">
+        <i class="fa-solid fa-location-dot"></i>
+        <span id="headerLocText">Jammu, J&amp;K</span>
+        <i class="fa-solid fa-chevron-down tiny"></i>
+        <div class="dropdown loc-dropdown" id="locDropdown">
+          <div class="dropdown-item" data-loc="Jammu, J&K">Jammu, J&amp;K</div>
+          <div class="dropdown-item" data-loc="Srinagar, J&K">Srinagar, J&amp;K</div>
+          <div class="dropdown-item" data-loc="Delhi NCR">Delhi NCR</div>
+          <div class="dropdown-item" data-loc="Chandigarh">Chandigarh</div>
+          <div class="dropdown-item" data-loc="Mumbai">Mumbai</div>
+        </div>
+      </div>
+      <button class="hs-btn" id="headerSearchBtn">Search</button>
+    </div>
+
+    <div class="header-actions">
+      <button class="applied-pill" id="appliedPill">
+        <i class="fa-regular fa-square-check"></i>
+        Jobs Applied <span class="pill-count" id="appliedCountPill">12</span>
+      </button>
+
+      <button class="icon-btn" id="notifBtn" title="Notifications">
+        <i class="fa-regular fa-bell"></i>
+        <span class="badge-dot" id="notifBadge">3</span>
+      </button>
+      <div class="dropdown notif-dropdown" id="notifDropdown">
+        <div class="nd-head">Notifications <a href="#" id="markAllRead">Mark all read</a></div>
+        <div class="nd-list" id="notifList"></div>
+      </div>
+
+      <button class="icon-btn" id="savedBtn" title="Saved Jobs">
+        <i class="fa-regular fa-heart"></i>
+        <span class="badge-dot pink" id="savedBadge">8</span>
+      </button>
+
+      <div class="profile-chip" id="profileBtn">
+        <div class="avatar">R</div>
+        <i class="fa-solid fa-chevron-down tiny"></i>
+        <div class="dropdown profile-dropdown" id="profileDropdown">
+          <div class="pd-head">
+            <div class="avatar lg">R</div>
+            <div><strong>Rahul Sharma</strong><small>rahul.sharma@gmail.com</small></div>
+          </div>
+          <div class="dropdown-item" data-act="dashboard"><i class="fa-regular fa-user"></i> My Dashboard</div>
+          <div class="dropdown-item" data-act="applied"><i class="fa-regular fa-square-check"></i> Applied Jobs</div>
+          <div class="dropdown-item" data-act="saved"><i class="fa-regular fa-heart"></i> Saved Jobs</div>
+          <div class="dropdown-item"><i class="fa-regular fa-file-lines"></i> My Resume</div>
+          <div class="dropdown-item"><i class="fa-solid fa-gear"></i> Settings</div>
+          <div class="dropdown-item danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</div>
+        </div>
+      </div>
+
+      <div class="auth-actions" id="guestAuthActions">
+        <button class="auth-btn auth-btn-login" id="loginBtn" type="button">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </button>
+        <button class="auth-btn auth-btn-signup" id="signupBtn" type="button">
+          <i class="fa-solid fa-user-plus"></i> Sign Up
+        </button>
+      </div>
+
+      <button class="dashboard-btn" id="userDashboardBtn" type="button" hidden>My Dashboard</button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= NAV BAR ================= -->
+<nav class="mainnav">
+  <div class="mainnav-inner">
+    <div class="cat-toggle" id="catToggle">
+      <i class="fa-solid fa-bars"></i> Categories <i class="fa-solid fa-chevron-down tiny"></i>
+      <div class="dropdown cat-dropdown" id="catDropdown"></div>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li class="active" data-nav="home">Home</li>
+      <li data-nav="jobs">Jobs</li>
+      <li data-nav="companies">Companies</li>
+      <li data-nav="nearby">Nearby Jobs</li>
+      <li data-nav="ai">AI Recommendations <span class="tag-new">New</span></li>
+      <li data-nav="skill">Skill Tests</li>
+      <li data-nav="resume">Resume Builder <span class="tag-premium">Premium</span></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ================= MAIN LAYOUT ================= -->
+<main class="layout">
+
+  <!-- ---------- LEFT SIDEBAR : FILTERS ---------- -->
+  <aside class="filters card" id="filtersPanel">
+    <div class="filters-head">
+      <h3>Filters</h3>
+      <button class="link-btn" id="clearFilters">Clear All</button>
+    </div>
+
+    <div class="fgroup" data-group="salary">
+      <div class="fgroup-title">Salary Range <i class="fa-solid fa-chevron-up"></i></div>
+      <div class="fgroup-body">
+        <label class="check"><input type="checkbox" name="salary" value="10-20" /><span>₹10,000 - ₹20,000</span></label>
+        <label class="check"><input type="checkbox" name="salary" value="20-30" /><span>₹20,000 - ₹30,000</span></label>
+        <label class="check"><input type="checkbox" name="salary" value="30-50" /><span>₹30,000 - ₹50,000</span></label>
+        <label class="check"><input type="checkbox" name="salary" value="50+" /><span>₹50,000+</span></label>
+      </div>
+    </div>
+
+    <div class="fgroup" data-group="experience">
+      <div class="fgroup-title">Experience <i class="fa-solid fa-chevron-up"></i></div>
+      <div class="fgroup-body">
+        <label class="check"><input type="checkbox" name="experience" value="Fresher" /><span>Fresher</span></label>
+        <label class="check"><input type="checkbox" name="experience" value="1-3" /><span>1 - 3 Years</span></label>
+        <label class="check"><input type="checkbox" name="experience" value="3-5" /><span>3 - 5 Years</span></label>
+        <label class="check"><input type="checkbox" name="experience" value="5+" /><span>5+ Years</span></label>
+      </div>
+    </div>
+
+    <div class="fgroup" data-group="distance">
+      <div class="fgroup-title">Distance <i class="fa-solid fa-chevron-up"></i></div>
+      <div class="fgroup-body">
+        <label class="check"><input type="checkbox" name="distance" value="5" /><span>Within 5 KM</span></label>
+        <label class="check"><input type="checkbox" name="distance" value="10" checked /><span>Within 10 KM</span></label>
+        <label class="check"><input type="checkbox" name="distance" value="25" /><span>Within 25 KM</span></label>
+        <label class="check"><input type="checkbox" name="distance" value="50" /><span>Within 50 KM</span></label>
+      </div>
+    </div>
+
+    <div class="fgroup" data-group="jobtype">
+      <div class="fgroup-title">Job Type <i class="fa-solid fa-chevron-up"></i></div>
+      <div class="fgroup-body">
+        <label class="check"><input type="checkbox" name="jobtype" value="Full Time" checked /><span>Full Time</span></label>
+        <label class="check"><input type="checkbox" name="jobtype" value="Part Time" checked /><span>Part Time</span></label>
+        <label class="check"><input type="checkbox" name="jobtype" value="Contract" /><span>Contract</span></label>
+        <label class="check"><input type="checkbox" name="jobtype" value="Temporary" /><span>Temporary</span></label>
+      </div>
+    </div>
+
+    <div class="fgroup" data-group="shift">
+      <div class="fgroup-title">Shift Timing <i class="fa-solid fa-chevron-up"></i></div>
+      <div class="fgroup-body">
+        <label class="check"><input type="checkbox" name="shift" value="Morning Shift" /><span>Morning Shift</span></label>
+        <label class="check"><input type="checkbox" name="shift" value="Day Shift" /><span>Day Shift</span></label>
+        <label class="check"><input type="checkbox" name="shift" value="Night Shift" /><span>Night Shift</span></label>
+        <label class="check"><input type="checkbox" name="shift" value="Flexible Shift" /><span>Flexible Shift</span></label>
+      </div>
+    </div>
+
+    <button class="apply-filters-btn" id="applyFiltersBtn">Apply Filters</button>
+  </aside>
+
+  <!-- ---------- CENTER COLUMN ---------- -->
+  <section class="center-col">
+
+    <!-- COMPANIES DIRECTORY -->
+    <div id="companiesView" class="companies-view" hidden>
+      <div class="co-hero">
+        <div class="co-hero-text">
+          <span class="co-eyebrow"><i class="fa-regular fa-building"></i> Verified employers</span>
+          <h1>Browse Top Companies</h1>
+          <p>Discover trusted employers, compare ratings, and explore open roles — all in one place.</p>
+        </div>
+        <div class="co-stats">
+          <div class="co-stat"><strong id="coStatCount">0</strong><span>Companies</span></div>
+          <div class="co-stat"><strong id="coStatJobs">0</strong><span>Open roles</span></div>
+          <div class="co-stat"><strong id="coStatVerified">0</strong><span>Verified</span></div>
+        </div>
+      </div>
+
+      <div class="co-toolbar card">
+        <div class="co-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" id="coSearchInput" placeholder="Search company name or industry..." autocomplete="off" />
+        </div>
+        <div class="co-filters">
+          <select id="coIndustryFilter">
+            <option value="">All industries</option>
+          </select>
+          <select id="coSortSelect">
+            <option value="jobs">Most jobs</option>
+            <option value="openings">Most openings</option>
+            <option value="rating">Top rated</option>
+            <option value="name">Name A–Z</option>
+          </select>
+          <label class="co-check"><input type="checkbox" id="coVerifiedOnly" /> Verified only</label>
+        </div>
+      </div>
+
+      <div class="companies-grid" id="companiesGrid"></div>
+      <div class="view-more-wrap">
+        <button class="view-more-btn" id="loadMoreCompanies" type="button">Load More Companies</button>
+      </div>
+    </div>
+
+    <div id="homeView">
+    <div class="hero">
+      <div class="hero-left">
+        <h1>Find Your Dream Job<br /><span>Near You</span></h1>
+        <p>Explore verified jobs. Apply in one click.</p>
+
+        <div class="hero-tabs">
+          <button class="htab active" data-htab="jobs">Search Jobs</button>
+          <button class="htab" data-htab="candidates">Search Candidates</button>
+        </div>
+
+        <div class="hero-search">
+          <div class="hero-search-input">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="heroSearchInput" placeholder="Search job title, company..." />
+          </div>
+          <div class="hero-search-loc">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Jammu, J&amp;K</span>
+            <i class="fa-solid fa-chevron-down tiny"></i>
+          </div>
+          <button class="hero-search-btn" id="heroSearchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+
+        <div class="hero-popular">
+          <span>Popular:</span>
+          <button class="ptag" data-q="Driver">Driver</button>
+          <button class="ptag" data-q="Delivery">Delivery</button>
+          <button class="ptag" data-q="Security Guard">Security Guard</button>
+          <button class="ptag" data-q="Sales">Sales</button>
+          <button class="ptag" data-q="Housekeeping">Housekeeping</button>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="float-card fc-match">
+          <small>AI Match Score</small>
+          <strong>92% <i class="fa-solid fa-bolt"></i></strong>
+        </div>
+        <div class="float-card fc-near">
+          <small>Jobs Near You</small>
+          <strong>120+</strong>
+          <span class="fc-sub">Available</span>
+        </div>
+        <div class="hero-person">
+          <svg viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#c98e63"/><stop offset="1" stop-color="#b07a52"/>
+              </linearGradient>
+              <linearGradient id="shirt" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#e8eef8"/><stop offset="1" stop-color="#cfd9ea"/>
+              </linearGradient>
+            </defs>
+            <circle cx="110" cy="120" r="95" fill="rgba(255,255,255,.08)"/>
+            <!-- backpack strap -->
+            <path d="M60 175 q-8 50 0 85 h28 q-6 -45 2 -82 z" fill="#1f3a66"/>
+            <path d="M160 175 q8 50 0 85 h-28 q6 -45 -2 -82 z" fill="#1f3a66"/>
+            <!-- body / shirt -->
+            <path d="M62 260 q-4 -70 18 -90 q14 -12 30 -12 t30 12 q22 20 18 90 z" fill="url(#shirt)"/>
+            <path d="M88 162 l22 14 22 -14 -8 96 h-28 z" fill="#3b82f6" opacity=".15"/>
+            <!-- neck -->
+            <rect x="98" y="138" width="24" height="26" rx="10" fill="url(#skin)"/>
+            <!-- head -->
+            <ellipse cx="110" cy="108" rx="34" ry="38" fill="url(#skin)"/>
+            <!-- hair -->
+            <path d="M76 100 q-2 -42 34 -44 q36 2 34 44 q-2 -10 -10 -14 q2 6 0 10 q-8 -16 -24 -16 t-24 16 q-2 -4 0 -10 q-8 4 -10 14z" fill="#231a14"/>
+            <!-- smile -->
+            <path d="M96 122 q14 12 28 0" stroke="#7a4a2c" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="96" cy="104" r="3.4" fill="#231a14"/>
+            <circle cx="124" cy="104" r="3.4" fill="#231a14"/>
+            <!-- arm holding phone -->
+            <path d="M148 190 q26 -4 30 -34 q2 -12 -8 -14 q-10 -2 -14 10 q-6 22 -16 24 z" fill="url(#skin)"/>
+            <rect x="158" y="120" width="26" height="44" rx="6" fill="#0f172a"/>
+            <rect x="161" y="125" width="20" height="34" rx="3" fill="#3b82f6"/>
+            <circle cx="171" cy="132" r="3" fill="#fff"/>
+            <rect x="164" y="139" width="14" height="3" rx="1.5" fill="#fff" opacity=".9"/>
+            <rect x="164" y="145" width="10" height="3" rx="1.5" fill="#fff" opacity=".6"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPULAR CATEGORIES -->
+    <div class="section-head">
+      <h2>Popular Job Categories</h2>
+      <button class="link-btn" id="viewAllCats">View All</button>
+    </div>
+    <div class="cat-grid" id="catGrid"></div>
+
+    <!-- FEATURED JOBS -->
+    <div class="section-head featured-head">
+      <h2>Featured Jobs</h2>
+      <div class="sort-by">
+        Sort by:
+        <select id="sortSelect">
+          <option value="relevance">Relevance</option>
+          <option value="salary-high">Salary: High to Low</option>
+          <option value="salary-low">Salary: Low to High</option>
+          <option value="distance">Distance: Nearest</option>
+          <option value="rating">Rating</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="job-tabs">
+      <button class="jtab active" data-jtab="recommended">Recommended</button>
+      <button class="jtab" data-jtab="nearby">Nearby Jobs</button>
+      <button class="jtab" data-jtab="latest">Latest Jobs</button>
+    </div>
+
+    <div class="jobs-grid" id="jobsGrid"></div>
+
+    <div class="view-more-wrap">
+      <button class="view-more-btn" id="viewMoreBtn">View More Jobs</button>
+    </div>
+    </div><!-- /#homeView -->
+  </section>
+
+  <!-- ---------- RIGHT SIDEBAR ---------- -->
+  <aside class="right-col">
+
+    <div class="card profile-card">
+      <div class="pc-top">
+        <h3>Hi, Rahul! <span class="wave">👋</span></h3>
+      </div>
+      <div class="pc-row">
+        <span>Profile Completion</span>
+        <strong id="profilePct">80%</strong>
+      </div>
+      <div class="progress"><div class="progress-fill" id="profileBar" style="width:80%"></div></div>
+      <p class="pc-hint">Complete your profile to get better job matches</p>
+      <button class="link-btn arrow" id="completeNowBtn">Complete Now <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <div class="card dash-card">
+      <h3>My Dashboard</h3>
+      <div class="dash-grid">
+        <div class="dash-item" data-dash="applied">
+          <strong id="dashApplied">12</strong>
+          <span>Applied Jobs</span>
+        </div>
+        <div class="dash-item" data-dash="interviews">
+          <strong id="dashInterviews">3</strong>
+          <span>Interview Calls</span>
+        </div>
+        <div class="dash-item" data-dash="saved">
+          <strong id="dashSaved">8</strong>
+          <span>Saved Jobs</span>
+        </div>
+        <div class="dash-item" data-dash="views">
+          <strong id="dashViews">45</strong>
+          <span>Profile Views</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card airec-card">
+      <div class="card-head">
+        <h3>AI Recommended Jobs</h3>
+        <button class="link-btn" id="aiViewAll">View All</button>
+      </div>
+      <div id="aiRecList"></div>
+    </div>
+
+    <div class="premium-card">
+      <div class="prem-left">
+        <h3>Upgrade to Premium</h3>
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Featured Jobs</li>
+          <li><i class="fa-solid fa-check"></i> Priority Support</li>
+          <li><i class="fa-solid fa-check"></i> AI Job Match</li>
+          <li><i class="fa-solid fa-check"></i> Unlimited Applications</li>
+        </ul>
+        <button class="upgrade-btn" id="upgradeBtn">Upgrade Now</button>
+      </div>
+      <div class="prem-trophy"><i class="fa-solid fa-trophy"></i></div>
+    </div>
+  </aside>
+
+  <!-- ---------- PHONE MOCKUP ---------- -->
+  <aside class="phone-col">
+    <div class="phone">
+      <div class="phone-status">
+        <span>9:41</span>
+        <span><i class="fa-solid fa-signal"></i> <i class="fa-solid fa-wifi"></i> <i class="fa-solid fa-battery-three-quarters"></i></span>
+      </div>
+      <div class="phone-header">
+        <span class="brand-mini"><span class="brand-icon sm"><img src="assets/icon.png" alt="" /></span> JobDozo</span>
+        <span class="ph-bell"><i class="fa-regular fa-bell"></i><i class="dot"></i></span>
+      </div>
+      <div class="phone-hero">
+        <h4>Find Your Dream Job Near You</h4>
+        <div class="ph-search"><i class="fa-solid fa-magnifying-glass"></i> Search jobs...</div>
+        <div class="ph-loc"><i class="fa-solid fa-location-dot"></i> Jammu, J&amp;K <button><i class="fa-solid fa-magnifying-glass"></i></button></div>
+      </div>
+      <div class="phone-cats">
+        <div class="ph-cat"><span class="ph-ci blue"><i class="fa-solid fa-shield-halved"></i></span>Security</div>
+        <div class="ph-cat"><span class="ph-ci indigo"><i class="fa-solid fa-car"></i></span>Driver</div>
+        <div class="ph-cat"><span class="ph-ci orange"><i class="fa-solid fa-box"></i></span>Delivery</div>
+        <div class="ph-cat"><span class="ph-ci purple"><i class="fa-solid fa-user-tie"></i></span>Office</div>
+        <div class="ph-cat"><span class="ph-ci gray"><i class="fa-solid fa-ellipsis"></i></span>More</div>
+      </div>
+      <div class="phone-section">
+        <span>Featured Jobs</span><a href="#">View All</a>
+      </div>
+      <div class="ph-jobs" id="phoneJobs"></div>
+      <button class="ph-more">View More Jobs</button>
+      <div class="ph-match card">
+        <small>AI Match Score</small>
+        <div class="ph-match-row">
+          <strong>92%</strong>
+          <svg viewBox="0 0 44 44" class="ring"><circle cx="22" cy="22" r="18" class="ring-bg"/><circle cx="22" cy="22" r="18" class="ring-fg"/></svg>
+        </div>
+        <small class="muted">You are a great match for Security Guard</small>
+      </div>
+      <div class="phone-nav">
+        <span class="active"><i class="fa-solid fa-house"></i>Home</span>
+        <span><i class="fa-solid fa-magnifying-glass"></i>Search</span>
+        <span><i class="fa-regular fa-heart"></i>Nearby</span>
+        <span class="chat"><i class="fa-regular fa-comment-dots"></i>Chat<i class="dot"></i></span>
+        <span><i class="fa-regular fa-user"></i>Profile</span>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<!-- ================= FEATURE STRIP ================= -->
+<footer class="feature-strip">
+  <div class="feature">
+    <span class="f-ico"><i class="fa-solid fa-hand-pointer"></i></span>
+    <div><strong>One Click Apply</strong><small>Apply in just one tap</small></div>
+  </div>
+  <div class="feature">
+    <span class="f-ico"><i class="fa-solid fa-circle-check"></i></span>
+    <div><strong>Verified Employers</strong><small>100% verified employers</small></div>
+  </div>
+  <div class="feature">
+    <span class="f-ico"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+    <div><strong>AI Job Match</strong><small>Get best job matches</small></div>
+  </div>
+  <div class="feature">
+    <span class="f-ico"><i class="fa-regular fa-comments"></i></span>
+    <div><strong>Chat with Employer</strong><small>Direct chat &amp; support</small></div>
+  </div>
+  <div class="feature">
+    <span class="f-ico"><i class="fa-solid fa-shield-halved"></i></span>
+    <div><strong>Secure &amp; Safe</strong><small>Your data is protected</small></div>
+  </div>
+  <div class="feature">
+    <span class="f-ico"><i class="fa-solid fa-clipboard-check"></i></span>
+    <div><strong>Skill Assessment</strong><small>Test your skills</small></div>
+  </div>
+</footer>
+
+</div><!-- /.desktop-shell -->
+
+<!-- ================= MOBILE APP UI ================= -->
+<div id="mobileApp" class="mobile-app">
+  <header class="m-header">
+    <div class="m-header-top">
+      <a class="m-brand" href="#" id="mBrandLogo">
+        <span class="m-brand-icon"><img src="assets/icon.png" alt="" /></span>
+        <span>Job<span>Dozo</span></span>
+      </a>
+      <button class="m-bell" id="mNotifBtn" type="button" aria-label="Notifications">
+        <i class="fa-regular fa-bell"></i>
+        <span class="m-badge" id="mNotifBadge" hidden>0</span>
+      </button>
+    </div>
+    <div class="m-search-wrap">
+      <div class="m-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="mSearchInput" placeholder="Search jobs, role or company" autocomplete="off" />
+        <button type="button" class="m-search-extra" title="Voice search"><i class="fa-solid fa-microphone"></i></button>
+        <button type="button" class="m-search-extra" title="Scan"><i class="fa-solid fa-qrcode"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="m-tabs" id="mTabs">
+    <button class="m-tab active" data-mtab="jobs" type="button"><i class="fa-solid fa-briefcase"></i> Jobs</button>
+    <button class="m-tab" data-mtab="companies" type="button">Companies</button>
+    <button class="m-tab" data-mtab="nearby" type="button">Nearby Jobs</button>
+    <button class="m-tab" data-mtab="skill" type="button">Skill Tests <span class="m-tag-new">New</span></button>
+  </nav>
+
+  <main class="m-main" id="mMain">
+    <section class="m-block m-companies-page" id="mCompaniesPage" hidden>
+      <div class="m-co-hero">
+        <h2>Top Companies</h2>
+        <p>Browse verified employers hiring near you</p>
+        <input type="search" id="mCoSearch" class="m-co-search" placeholder="Search companies..." />
+      </div>
+      <div class="m-co-grid" id="mCoGrid"></div>
+    </section>
+
+    <div id="mHomeSections">
+    <div class="m-cats-scroll" id="mCats"></div>
+
+    <section class="m-hero-banner" id="mHeroBanner">
+      <div class="m-hero-slide active">
+        <span class="m-hero-tag">BEST MATCHES FOR YOU</span>
+        <h2><span id="mJobCount">5,000+</span> Jobs Near You</h2>
+        <p class="m-hero-sub">Salary up to <strong>₹50,000*</strong></p>
+        <p class="m-hero-loc"><i class="fa-solid fa-location-dot"></i> <span id="mHeroLoc">Jammu &amp; Kashmir</span></p>
+        <button class="m-hero-cta" type="button" id="mHeroApply">Apply Now</button>
+        <div class="m-hero-float fc1">
+          <small>AI Match Score</small>
+          <strong id="mHeroMatch">95%</strong>
+        </div>
+        <div class="m-hero-float fc2">
+          <small>Jobs Near You</small>
+          <strong id="mHeroNear">1200+</strong>
+          <em>Available</em>
+        </div>
+      </div>
+      <div class="m-hero-dots"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+    </section>
+
+    <section class="m-block" id="mSuggestedBlock">
+      <div class="m-block-head">
+        <h3>Suggested For You</h3>
+        <button type="button" class="m-link" id="mSuggestedAll">View All <i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="m-hscroll" id="mSuggested"></div>
+    </section>
+
+    <section class="m-block" id="mCompaniesBlock">
+      <div class="m-block-head">
+        <h3>Top Companies</h3>
+        <button type="button" class="m-link" id="mCompaniesAll">View All <i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="m-hscroll m-companies" id="mCompanies"></div>
+    </section>
+
+    <section class="m-block" id="mFeaturedBlock">
+      <div class="m-block-head">
+        <h3>Featured Jobs</h3>
+        <button type="button" class="m-link" id="mFeaturedAll">View All <i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="m-feat-grid" id="mFeatured"></div>
+    </section>
+
+    <section class="m-block" id="mNearbyBlock">
+      <div class="m-block-head">
+        <h3>Jobs Near You</h3>
+        <button type="button" class="m-link" id="mNearbyAll">View All <i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="m-nearby-list" id="mNearby"></div>
+    </section>
+    </div><!-- /#mHomeSections -->
+
+    <section class="m-block m-auth-block" id="mAuthBlock">
+      <button class="m-auth-login" id="mLoginBtn" type="button"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+      <button class="m-auth-signup" id="mSignupBtn" type="button"><i class="fa-solid fa-user-plus"></i> Sign Up</button>
+    </section>
+  </main>
+
+  <nav class="m-bottom-nav" id="mBottomNav">
+    <button class="m-nav-item active" data-mnav="home" type="button"><i class="fa-solid fa-house"></i><span>Home</span></button>
+    <button class="m-nav-item" data-mnav="search" type="button"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></button>
+    <button class="m-nav-item" data-mnav="nearby" type="button"><i class="fa-solid fa-location-dot"></i><span>Nearby</span></button>
+    <button class="m-nav-item" data-mnav="chat" type="button"><i class="fa-regular fa-comment-dots"></i><span>Chat</span><i class="m-chat-dot"></i></button>
+    <button class="m-nav-item" data-mnav="profile" type="button"><i class="fa-regular fa-user"></i><span>Profile</span></button>
+  </nav>
+</div>
+
+<!-- ================= MODALS ================= -->
+<div class="modal-overlay" id="modalOverlay">
+
+  <!-- Company profile modal -->
+  <div class="modal modal-wide" id="companyModal">
+    <button class="modal-close" data-close><i class="fa-solid fa-xmark"></i></button>
+    <div id="companyModalBody"></div>
+  </div>
+
+  <!-- Job details modal -->
+  <div class="modal" id="jobModal">
+    <button class="modal-close" data-close><i class="fa-solid fa-xmark"></i></button>
+    <div id="jobModalBody"></div>
+  </div>
+
+  <!-- Apply modal -->
+  <div class="modal" id="applyModal">
+    <button class="modal-close" data-close><i class="fa-solid fa-xmark"></i></button>
+    <h3 class="modal-title">Apply for <span id="applyJobTitle"></span></h3>
+    <p class="modal-sub" id="applyJobCompany"></p>
+    <form id="applyForm">
+      <label>Full Name<input type="text" id="apName" value="Rahul Sharma" required /></label>
+      <label>Phone Number<input type="tel" id="apPhone" placeholder="+91 XXXXX XXXXX" required pattern="[+0-9 ]{10,15}" /></label>
+      <label>Email<input type="email" id="apEmail" value="rahul.sharma@gmail.com" required /></label>
+      <label>Experience
+        <select id="apExp">
+          <option>Fresher</option><option>1 - 3 Years</option><option>3 - 5 Years</option><option>5+ Years</option>
+        </select>
+      </label>
+      <label class="file-label">Resume (optional)
+        <input type="file" id="apResume" accept=".pdf,.doc,.docx" />
+      </label>
+      <button type="submit" class="btn-primary full">Submit Application <i class="fa-solid fa-paper-plane"></i></button>
+    </form>
+  </div>
+
+  <!-- Generic list modal (applied / saved) -->
+  <div class="modal" id="listModal">
+    <button class="modal-close" data-close><i class="fa-solid fa-xmark"></i></button>
+    <h3 class="modal-title" id="listModalTitle"></h3>
+    <div id="listModalBody" class="list-modal-body"></div>
+  </div>
+
+  <!-- Premium modal -->
+  <div class="modal" id="premiumModal">
+    <button class="modal-close" data-close><i class="fa-solid fa-xmark"></i></button>
+    <div class="prem-modal-head"><i class="fa-solid fa-crown"></i><h3>JobDozo Premium</h3></div>
+    <div class="plans">
+      <div class="plan">
+        <h4>Monthly</h4><strong>₹199<span>/mo</span></strong>
+        <button class="btn-outline" data-plan="Monthly">Choose Plan</button>
+      </div>
+      <div class="plan best">
+        <span class="best-tag">Best Value</span>
+        <h4>Yearly</h4><strong>₹1,499<span>/yr</span></strong>
+        <button class="btn-primary" data-plan="Yearly">Choose Plan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toasts" id="toasts"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,421 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JobDozo Employer — Post New Job</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="stylesheet" href="css/employer.css" />
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="icon" href="assets/icon.png" type="image/png" />
+</head>
+<body data-role="employer">
+
+<!-- ============ SIDEBAR ============ -->
+<aside class="esidebar" id="esidebar">
+  <a class="es-brand" href="index.html" title="Back to JobDozo site">
+    <span class="brand-icon"><img src="assets/icon.png" alt="JobDozo" /></span>
+    <span class="es-brand-text">
+      <strong>Job<em>Dozo</em></strong>
+      <small>Employer</small>
+    </span>
+  </a>
+
+  <button class="post-job-btn" id="postJobSideBtn"><i class="fa-solid fa-plus"></i> Post New Job</button>
+
+  <nav class="es-nav">
+    <a class="es-item" data-page="Dashboard"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+
+    <div class="es-group" data-open="true">
+      <a class="es-item has-sub active-parent"><i class="fa-solid fa-briefcase"></i><span>Jobs</span><i class="fa-solid fa-chevron-up caret"></i></a>
+      <div class="es-sub">
+        <a class="es-subitem" data-page="All Jobs">All Jobs</a>
+        <a class="es-subitem" data-page="Active Jobs">Active Jobs</a>
+        <a class="es-subitem" data-page="Pending Approval">Pending Approval</a>
+        <a class="es-subitem" data-page="Expired Jobs">Expired Jobs</a>
+        <a class="es-subitem" data-page="Draft Jobs">Draft Jobs</a>
+      </div>
+    </div>
+
+    <a class="es-item" data-page="Applications"><i class="fa-regular fa-file-lines"></i><span>Applications</span><b class="es-badge">23</b></a>
+    <a class="es-item" data-page="Candidates"><i class="fa-solid fa-user-group"></i><span>Candidates</span></a>
+    <a class="es-item" data-page="Interview Schedule"><i class="fa-regular fa-calendar-check"></i><span>Interview Schedule</span></a>
+    <a class="es-item" data-page="Talent Search"><i class="fa-solid fa-magnifying-glass"></i><span>Talent Search</span></a>
+    <a class="es-item" data-page="Company Profile"><i class="fa-regular fa-building"></i><span>Company Profile</span></a>
+    <a class="es-item" data-page="Transactions"><i class="fa-regular fa-credit-card"></i><span>Transactions</span></a>
+    <a class="es-item" data-page="Subscription"><i class="fa-solid fa-crown"></i><span>Subscription</span></a>
+    <a class="es-item" data-page="Messages"><i class="fa-regular fa-comment-dots"></i><span>Messages</span><b class="es-badge red">5</b></a>
+    <a class="es-item" data-page="Reviews & Ratings"><i class="fa-regular fa-star"></i><span>Reviews &amp; Ratings</span></a>
+    <a class="es-item" data-page="Settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+    <a class="es-item" data-page="Help & Support"><i class="fa-regular fa-circle-question"></i><span>Help &amp; Support</span></a>
+  </nav>
+
+  <div class="es-boost">
+    <div class="es-boost-text">
+      <strong>Boost Your Job</strong>
+      <small>Get more visibility and quality applications</small>
+      <button id="boostBtn">Upgrade Now</button>
+    </div>
+    <div class="es-rocket"><i class="fa-solid fa-rocket"></i></div>
+  </div>
+</aside>
+
+<!-- ============ MAIN ============ -->
+<div class="emain">
+
+  <!-- TOPBAR -->
+  <header class="etopbar">
+    <button class="tb-burger" id="esidebarToggle"><i class="fa-solid fa-bars"></i></button>
+
+    <div class="etb-right">
+      <div class="wallet" id="walletBtn">
+        <span class="wallet-ico"><i class="fa-solid fa-wallet"></i></span>
+        <div><small>Wallet Balance</small><strong id="walletAmt">₹ 12,450.00</strong></div>
+      </div>
+
+      <button class="tb-icon" id="eNotifBtn"><i class="fa-regular fa-bell"></i><span class="tb-badge">8</span></button>
+      <div class="edropdown" id="eNotifDropdown">
+        <div class="ed-head">Notifications</div>
+        <div class="ed-list" id="eNotifList"></div>
+      </div>
+
+      <button class="tb-icon" id="eMsgBtn"><i class="fa-regular fa-comment-dots"></i></button>
+
+      <div class="etb-profile" id="eProfileBtn">
+        <div class="etb-avatar">TC</div>
+        <div class="etb-prof-text">
+          <strong>TechCorp Solutions</strong>
+          <small><i class="fa-solid fa-circle-check vbadge"></i> Verified Employer</small>
+        </div>
+        <i class="fa-solid fa-chevron-down tiny"></i>
+        <div class="edropdown" id="eProfileDropdown">
+          <a class="ed-item"><i class="fa-regular fa-building"></i> Company Profile</a>
+          <a class="ed-item"><i class="fa-solid fa-gear"></i> Settings</a>
+          <a class="ed-item" href="index.html"><i class="fa-solid fa-globe"></i> View Live Site</a>
+          <a class="ed-item danger" id="employerLogout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="econtent">
+
+    <div class="epage-head">
+      <div class="breadcrumb">Dashboard <i class="fa-solid fa-chevron-right"></i> Jobs <i class="fa-solid fa-chevron-right"></i> <span>Post New Job</span></div>
+      <button class="view-jobs-btn" id="viewMyJobsBtn">View My Jobs</button>
+    </div>
+
+    <div class="elayout">
+
+      <!-- ===== FORM COLUMN ===== -->
+      <section class="form-col">
+        <div class="panel form-panel">
+          <h1 class="form-title">Post a New Job</h1>
+
+          <!-- Stepper -->
+          <div class="stepper" id="stepper">
+            <div class="step active" data-step="1"><span class="step-dot">1</span><span class="step-label">Job Details</span></div>
+            <div class="step-line"></div>
+            <div class="step" data-step="2"><span class="step-dot">2</span><span class="step-label">Job Requirements</span></div>
+            <div class="step-line"></div>
+            <div class="step" data-step="3"><span class="step-dot">3</span><span class="step-label">Salary &amp; Benefits</span></div>
+            <div class="step-line"></div>
+            <div class="step" data-step="4"><span class="step-dot">4</span><span class="step-label">Review &amp; Publish</span></div>
+          </div>
+
+          <!-- STEP 1 : Job Details -->
+          <div class="form-step show" data-stepbody="1">
+            <div class="frow three">
+              <div class="fgroup">
+                <label>Job Title <em>*</em></label>
+                <input type="text" id="fJobTitle" maxlength="100" placeholder="e.g. Software Developer" />
+                <small class="counter"><span id="titleCount">0</span>/100</small>
+              </div>
+              <div class="fgroup">
+                <label>Job Category <em>*</em></label>
+                <select id="fCategory">
+                  <option value="">Select Category</option>
+                  <option>IT &amp; Software</option>
+                  <option>Sales &amp; Marketing</option>
+                  <option>Finance</option>
+                  <option>Healthcare</option>
+                  <option>Education</option>
+                  <option>Security</option>
+                  <option>Logistics &amp; Delivery</option>
+                  <option>Human Resources</option>
+                </select>
+              </div>
+              <div class="fgroup">
+                <label>Job Type <em>*</em></label>
+                <div class="pill-group" id="fJobType">
+                  <button type="button" class="pill active" data-val="Full Time"><i class="fa-regular fa-circle-dot"></i> Full Time</button>
+                  <button type="button" class="pill" data-val="Part Time">Part Time</button>
+                  <button type="button" class="pill" data-val="Contract">Contract</button>
+                  <button type="button" class="pill" data-val="Internship">Internship</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="frow two">
+              <div class="fgroup">
+                <label>Location <em>*</em></label>
+                <div class="loc-row">
+                  <input type="text" id="fLocation" placeholder="Enter city or area" />
+                  <button type="button" class="use-loc" id="useMyLocation"><i class="fa-solid fa-location-crosshairs"></i> Use My Location</button>
+                </div>
+              </div>
+              <div class="fgroup">
+                <label>Work Mode <em>*</em></label>
+                <div class="pill-group" id="fWorkMode">
+                  <button type="button" class="pill active" data-val="On-site"><i class="fa-regular fa-circle-dot"></i> On-site</button>
+                  <button type="button" class="pill" data-val="Remote">Remote</button>
+                  <button type="button" class="pill" data-val="Hybrid">Hybrid</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="fgroup">
+              <label>Job Description <em>*</em></label>
+              <div class="rte">
+                <div class="rte-bar">
+                  <button type="button" data-cmd="bold" title="Bold"><i class="fa-solid fa-bold"></i></button>
+                  <button type="button" data-cmd="italic" title="Italic"><i class="fa-solid fa-italic"></i></button>
+                  <button type="button" data-cmd="underline" title="Underline"><i class="fa-solid fa-underline"></i></button>
+                  <span class="rte-sep"></span>
+                  <button type="button" data-cmd="insertUnorderedList" title="Bullet list"><i class="fa-solid fa-list-ul"></i></button>
+                  <button type="button" data-cmd="insertOrderedList" title="Numbered list"><i class="fa-solid fa-list-ol"></i></button>
+                  <span class="rte-sep"></span>
+                  <button type="button" data-cmd="createLink" title="Insert link"><i class="fa-solid fa-link"></i></button>
+                </div>
+                <div class="rte-area" id="fDescription" contenteditable="true" data-placeholder="Write job description, responsibilities, and expectations..."></div>
+              </div>
+              <small class="counter"><span id="descCount">0</span>/5000</small>
+            </div>
+
+            <div class="fgroup">
+              <label>Company Overview</label>
+              <textarea id="fOverview" rows="4" maxlength="1000" placeholder="Tell candidates about your company..."></textarea>
+              <small class="counter"><span id="overviewCount">0</span>/1000</small>
+            </div>
+          </div>
+
+          <!-- STEP 2 : Job Requirements -->
+          <div class="form-step" data-stepbody="2">
+            <div class="frow two">
+              <div class="fgroup">
+                <label>Experience Required <em>*</em></label>
+                <div class="range-row">
+                  <select id="fExpMin">
+                    <option value="0">Fresher</option><option value="1">1 Yr</option><option value="2" selected>2 Yrs</option><option value="3">3 Yrs</option><option value="5">5 Yrs</option>
+                  </select>
+                  <span>to</span>
+                  <select id="fExpMax">
+                    <option value="1">1 Yr</option><option value="2">2 Yrs</option><option value="4" selected>4 Yrs</option><option value="6">6 Yrs</option><option value="10">10+ Yrs</option>
+                  </select>
+                </div>
+              </div>
+              <div class="fgroup">
+                <label>Minimum Education</label>
+                <select id="fEducation">
+                  <option>Any</option><option>10th Pass</option><option>12th Pass</option><option selected>Graduate</option><option>Post Graduate</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="fgroup">
+              <label>Required Skills <em>*</em> <small style="font-weight:500;color:#7c8aa5">(press Enter to add)</small></label>
+              <div class="tags-input" id="skillsBox">
+                <input type="text" id="fSkillInput" placeholder="e.g. React.js" />
+              </div>
+            </div>
+
+            <div class="frow two">
+              <div class="fgroup">
+                <label>Number of Openings <em>*</em></label>
+                <input type="number" id="fOpenings" min="1" value="3" />
+              </div>
+              <div class="fgroup">
+                <label>English Level</label>
+                <select id="fEnglish"><option>Any</option><option selected>Basic</option><option>Intermediate</option><option>Fluent</option></select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3 : Salary & Benefits -->
+          <div class="form-step" data-stepbody="3">
+            <div class="frow two">
+              <div class="fgroup">
+                <label>Salary Range (LPA) <em>*</em></label>
+                <div class="range-row">
+                  <input type="number" id="fSalMin" min="1" value="6" step="0.5" />
+                  <span>to</span>
+                  <input type="number" id="fSalMax" min="1" value="12" step="0.5" />
+                </div>
+              </div>
+              <div class="fgroup">
+                <label>Salary Type</label>
+                <select id="fSalType"><option selected>Yearly (LPA)</option><option>Monthly</option><option>Per Day</option></select>
+              </div>
+            </div>
+
+            <label class="checkline"><input type="checkbox" id="fHideSalary" /> Hide salary from candidates</label>
+
+            <div class="fgroup" style="margin-top:14px">
+              <label>Benefits &amp; Perks</label>
+              <div class="benefits" id="fBenefits">
+                <label class="checkline"><input type="checkbox" value="Health Insurance" checked /> Health Insurance</label>
+                <label class="checkline"><input type="checkbox" value="Provident Fund" checked /> Provident Fund</label>
+                <label class="checkline"><input type="checkbox" value="Flexible Hours" /> Flexible Hours</label>
+                <label class="checkline"><input type="checkbox" value="Work From Home" /> Work From Home</label>
+                <label class="checkline"><input type="checkbox" value="Performance Bonus" /> Performance Bonus</label>
+                <label class="checkline"><input type="checkbox" value="Free Meals" /> Free Meals</label>
+                <label class="checkline"><input type="checkbox" value="Cab Facility" /> Cab Facility</label>
+                <label class="checkline"><input type="checkbox" value="Paid Leaves" /> Paid Leaves</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4 : Review & Publish -->
+          <div class="form-step" data-stepbody="4">
+            <div class="review-box" id="reviewBox"></div>
+          </div>
+
+          <!-- FOOTER BUTTONS -->
+          <div class="form-foot">
+            <button class="btn-ghost" id="backBtn" style="visibility:hidden"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <div class="ff-right">
+              <button class="btn-outline" id="saveDraftBtn">Save as Draft</button>
+              <button class="btn-primary" id="nextBtn">Save &amp; Next</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- WHY STRIP -->
+        <div class="panel why-strip">
+          <h3>Why Job Creators Choose Us?</h3>
+          <div class="why-grid">
+            <div class="why"><span class="why-ico g"><i class="fa-regular fa-id-badge"></i></span><div><strong>Get Quality Applicants</strong><small>Attract verified &amp; relevant candidates</small></div></div>
+            <div class="why"><span class="why-ico b"><i class="fa-solid fa-wand-magic-sparkles"></i></span><div><strong>Smart Matching</strong><small>AI matches job with best candidates</small></div></div>
+            <div class="why"><span class="why-ico gr"><i class="fa-solid fa-earth-asia"></i></span><div><strong>Wide Reach</strong><small>Reach millions of active job seekers</small></div></div>
+            <div class="why"><span class="why-ico o"><i class="fa-solid fa-bolt"></i></span><div><strong>Fast Hiring</strong><small>Hire the right talent faster</small></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== MIDDLE COLUMN : tips + preview ===== -->
+      <aside class="mid-col">
+        <div class="panel tips-panel">
+          <h3>Tips for Better Results</h3>
+          <div class="tip"><span class="tip-ico" style="background:#eef2ff;color:#6366f1"><i class="fa-regular fa-pen-to-square"></i></span><div><strong>Write a clear job title</strong><small>Job titles with specific skills get 3x more applications</small></div></div>
+          <div class="tip"><span class="tip-ico" style="background:#ecfdf5;color:#10b981"><i class="fa-solid fa-indian-rupee-sign"></i></span><div><strong>Add salary range</strong><small>Jobs with salary get 2.5x more applications</small></div></div>
+          <div class="tip"><span class="tip-ico" style="background:#eff6ff;color:#3b82f6"><i class="fa-regular fa-file-lines"></i></span><div><strong>Describe responsibilities</strong><small>Clear job descriptions attract right candidates</small></div></div>
+          <div class="tip"><span class="tip-ico" style="background:#fdf4ff;color:#a855f7"><i class="fa-solid fa-list-check"></i></span><div><strong>Add required skills</strong><small>Add relevant skills to match better candidates</small></div></div>
+        </div>
+
+        <div class="panel preview-panel">
+          <h3>Job Preview</h3>
+          <p class="preview-sub">This is how your job card will look</p>
+          <div class="jp-card">
+            <div class="jp-head">
+              <div class="jp-logo">TC</div>
+              <div>
+                <strong>TechCorp Solutions</strong>
+                <small class="jp-verified">Verified Employer <i class="fa-solid fa-circle-check"></i></small>
+              </div>
+            </div>
+            <h4 id="pvTitle">Software Developer</h4>
+            <div class="jp-sal"><span id="pvSalary">₹ 6 - 12 LPA</span> <b class="jp-type" id="pvType">Full Time</b></div>
+            <div class="jp-meta">
+              <span><i class="fa-solid fa-location-dot"></i> <span id="pvLocation">Bangalore, Karnataka</span></span>
+            </div>
+            <div class="jp-meta">
+              <span><i class="fa-solid fa-briefcase"></i> <span id="pvExp">2-4 Yrs</span></span>
+              <span><i class="fa-solid fa-building"></i> <span id="pvMode">On-site</span></span>
+            </div>
+            <div class="jp-skills" id="pvSkills"></div>
+            <button class="btn-primary full" id="pvViewBtn">View Job</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ===== RIGHT COLUMN ===== -->
+      <aside class="eright-col">
+        <div class="panel pub-panel">
+          <h3>Publish Options</h3>
+          <label class="radio-line">
+            <input type="radio" name="publish" value="now" checked />
+            <div><strong>Publish Now</strong><small>Job will be live immediately</small></div>
+          </label>
+          <label class="radio-line">
+            <input type="radio" name="publish" value="schedule" />
+            <div><strong>Schedule for Later</strong><small>Choose date &amp; time</small></div>
+          </label>
+          <input type="datetime-local" id="scheduleAt" class="schedule-input" style="display:none" />
+          <label class="radio-line">
+            <input type="radio" name="publish" value="draft" />
+            <div><strong>Save as Draft</strong><small>Save and continue later</small></div>
+          </label>
+        </div>
+
+        <div class="panel vis-panel">
+          <h3><i class="fa-solid fa-arrow-trend-up"></i> Increase Visibility</h3>
+          <label class="addon" data-price="499">
+            <input type="checkbox" value="Featured Job" />
+            <span class="addon-check"><i class="fa-solid fa-check"></i></span>
+            <div><strong>Featured Job</strong><small>Get 5x more visibility</small></div>
+            <b>₹499</b>
+          </label>
+          <label class="addon" data-price="299">
+            <input type="checkbox" value="Urgent Hiring" />
+            <span class="addon-check"><i class="fa-solid fa-check"></i></span>
+            <div><strong>Urgent Hiring</strong><small>Show urgency to job seekers</small></div>
+            <b>₹299</b>
+          </label>
+          <label class="addon" data-price="399">
+            <input type="checkbox" value="Top Job Slot" />
+            <span class="addon-check"><i class="fa-solid fa-check"></i></span>
+            <div><strong>Top Job Slot</strong><small>Show at the top of listings</small></div>
+            <b>₹399</b>
+          </label>
+          <div class="addon-total" id="addonTotal" style="display:none">Add-ons total: <b>₹0</b></div>
+        </div>
+
+        <div class="panel plan-panel">
+          <h3>Your Plan</h3>
+          <div class="plan-row"><span>Professional Plan</span><a class="panel-link" id="planDetails">View Details</a></div>
+          <div class="plan-row"><span>Jobs Remaining</span><b id="jobsRemaining">12 / 20</b></div>
+          <div class="plan-row"><span>Valid Till</span><b>20 Aug 2024</b></div>
+          <div class="plan-bar"><div class="plan-fill" id="planFill" style="width:60%"></div></div>
+          <button class="btn-outline full" id="upgradePlanBtn">Upgrade Plan</button>
+        </div>
+
+        <div class="panel help-panel">
+          <span class="help-ico"><i class="fa-solid fa-headset"></i></span>
+          <strong>Need Help?</strong>
+          <small>Contact our support team for assistance</small>
+          <button class="btn-outline full" id="contactSupportBtn">Contact Support</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="emodal-overlay" id="emodalOverlay">
+  <div class="emodal" id="emodal">
+    <button class="emodal-close" id="emodalClose"><i class="fa-solid fa-xmark"></i></button>
+    <div id="emodalBody"></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/api.js"></script>
+<script src="js/employer.js"></script>
+</body>
+</html>

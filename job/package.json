@@ -1,0 +1,29 @@
+{
+  "name": "JobDozo",
+  "version": "1.0.0",
+  "description": "JobDozo multi-role job marketplace with real-time sync",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "dev:seeker": "cd seeker-app && npm run dev",
+    "build:seeker": "cd seeker-app && npm run build",
+    "dev:employer": "cd employer-app && npm run dev",
+    "build:employer": "cd employer-app && npm run build",
+    "build:recruiter": "cd recruiter-app && npm run build",
+    "build:admin": "cd admin-app && npm run build",
+    "build:super-admin": "cd super-admin-app && npm run build",
+    "build:portals": "npm run build:seeker && npm run build:employer && npm run build:recruiter && npm run build:admin && npm run build:super-admin",
+    "seed": "node -e \"require('./server/seed').reseed()\"",
+    "check": "node --check server/index.js && node --check server/routes.js && node --check server/store.js && node --check server/seed.js && node --check server/auth.js"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "socket.io": "^4.7.5"
+  },
+  "license": "MIT"
+}

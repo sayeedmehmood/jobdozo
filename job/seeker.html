@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JobDozo — Job Seeker Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="stylesheet" href="css/seeker.css" />
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="icon" href="assets/icon.png" type="image/png" />
+</head>
+<body data-role="seeker">
+
+<!-- ============ SIDEBAR ============ -->
+<aside class="ssidebar" id="ssidebar">
+  <a class="ss-brand" href="index.html" title="Back to JobDozo site">
+    <span class="brand-icon"><img src="assets/icon.png" alt="JobDozo" /></span>
+    <span class="ss-brand-text">
+      <strong>Job<em>Dozo</em></strong>
+      <small>Job Seeker</small>
+    </span>
+  </a>
+
+  <div class="ss-profile-mini" id="ssProfileMini" title="View my profile">
+    <div class="ss-avatar">R</div>
+    <div>
+      <strong>Rahul Sharma</strong>
+      <small><i class="fa-solid fa-location-dot"></i> Jammu, J&amp;K</small>
+    </div>
+    <span class="ss-online" title="Open to work"></span>
+  </div>
+
+  <a class="find-jobs-btn" href="index.html"><i class="fa-solid fa-magnifying-glass"></i> Find Jobs</a>
+
+  <nav class="ss-nav">
+    <a class="ss-item active" data-page="Dashboard"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+    <a class="ss-item" data-page="My Applications"><i class="fa-regular fa-file-lines"></i><span>My Applications</span><b class="ss-badge" id="sbAppliedBadge">12</b></a>
+    <a class="ss-item" data-page="Saved Jobs"><i class="fa-regular fa-heart"></i><span>Saved Jobs</span><b class="ss-badge pink" id="sbSavedBadge">8</b></a>
+    <a class="ss-item" data-page="Recommended Jobs"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Recommended Jobs</span></a>
+    <a class="ss-item" data-page="Interview Schedule"><i class="fa-regular fa-calendar-check"></i><span>Interview Schedule</span><b class="ss-badge green" id="sbInterviewBadge">0</b></a>
+    <a class="ss-item" data-page="Messages"><i class="fa-regular fa-comment-dots"></i><span>Messages</span><b class="ss-badge red" id="sbMsgBadge">0</b></a>
+    <a class="ss-item" data-page="My Resume"><i class="fa-regular fa-id-card"></i><span>My Resume</span></a>
+    <a class="ss-item" data-page="Skill Tests"><i class="fa-solid fa-clipboard-check"></i><span>Skill Tests</span><b class="ss-badge purple" id="sbSkillBadge" style="display:none">0</b></a>
+    <a class="ss-item" data-page="Job Alerts"><i class="fa-regular fa-bell"></i><span>Job Alerts</span><b class="ss-badge orange" id="sbAlertBadge" style="display:none">0</b></a>
+    <a class="ss-item" data-page="My Profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
+    <a class="ss-item" data-page="Subscription"><i class="fa-solid fa-crown"></i><span>Subscription</span></a>
+    <a class="ss-item" data-page="Settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+    <a class="ss-item" data-page="Help & Support"><i class="fa-regular fa-circle-question"></i><span>Help &amp; Support</span></a>
+  </nav>
+
+  <div class="ss-boost">
+    <div class="ss-boost-text">
+      <strong>Get Hired Faster</strong>
+      <small>Stand out with a Premium profile badge</small>
+      <button id="premiumBtn">Go Premium</button>
+    </div>
+    <div class="ss-star"><i class="fa-solid fa-medal"></i></div>
+  </div>
+</aside>
+
+<!-- ============ MAIN ============ -->
+<div class="smain">
+
+  <!-- TOPBAR -->
+  <header class="stopbar">
+    <button class="tb-burger" id="ssidebarToggle"><i class="fa-solid fa-bars"></i></button>
+
+    <div class="stb-search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="seekerSearch" placeholder="Search your applications..." />
+    </div>
+
+    <div class="stb-right">
+      <button class="tb-icon" id="sNotifBtn"><i class="fa-regular fa-bell"></i><span class="tb-badge">4</span></button>
+      <div class="sdropdown" id="sNotifDropdown">
+        <div class="sd-head">Notifications</div>
+        <div id="sNotifList"></div>
+      </div>
+
+      <button class="tb-icon" id="sMsgBtn"><i class="fa-regular fa-comment-dots"></i><span class="tb-badge" id="sMsgBadge">0</span></button>
+      <div class="sdropdown msg-dropdown" id="sMsgDropdown">
+        <div class="sd-head">Messages <a href="#" id="sMsgViewAll">View all</a></div>
+        <div id="sMsgPreviewList"></div>
+      </div>
+
+      <div class="stb-profile" id="sProfileBtn">
+        <div class="stb-avatar">R</div>
+        <div class="stb-prof-text">
+          <strong>Rahul Sharma</strong>
+          <small><span class="open-dot"></span> Open to Work</small>
+        </div>
+        <i class="fa-solid fa-chevron-down tiny"></i>
+        <div class="sdropdown" id="sProfileDropdown">
+          <a class="sd-item" data-goto="My Profile"><i class="fa-regular fa-user"></i> View Profile</a>
+          <a class="sd-item" data-goto="Settings"><i class="fa-solid fa-gear"></i> Settings</a>
+          <a class="sd-item" data-goto="My Resume"><i class="fa-regular fa-file-lines"></i> My Resume</a>
+          <a class="sd-item" href="index.html"><i class="fa-solid fa-magnifying-glass"></i> Browse Jobs</a>
+          <a class="sd-item danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="scontent">
+
+    <div class="spage-head">
+      <div>
+        <h1>Hi, Rahul! <span class="wave">👋</span></h1>
+        <div class="breadcrumb">Dashboard <i class="fa-solid fa-chevron-right"></i> <span>Overview</span></div>
+      </div>
+      <a class="browse-btn" href="index.html"><i class="fa-solid fa-magnifying-glass"></i> Browse New Jobs</a>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="sstats-row">
+      <div class="sstat" data-go="applications">
+        <span class="sst-ico" style="background:linear-gradient(135deg,#3b82f6,#2563eb)"><i class="fa-regular fa-file-lines"></i></span>
+        <div><h4>Applied Jobs</h4><strong id="stApplied">12</strong><small>+3 this week</small></div>
+      </div>
+      <div class="sstat" data-go="interviews">
+        <span class="sst-ico" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)"><i class="fa-solid fa-phone"></i></span>
+        <div><h4>Interview Calls</h4><strong id="stInterviews">3</strong><small>1 today</small></div>
+      </div>
+      <div class="sstat" data-go="saved">
+        <span class="sst-ico" style="background:linear-gradient(135deg,#ec4899,#db2777)"><i class="fa-regular fa-heart"></i></span>
+        <div><h4>Saved Jobs</h4><strong id="stSaved">8</strong><small>2 closing soon</small></div>
+      </div>
+      <div class="sstat">
+        <span class="sst-ico" style="background:linear-gradient(135deg,#22c55e,#16a34a)"><i class="fa-regular fa-eye"></i></span>
+        <div><h4>Profile Views</h4><strong id="stViews">45</strong><small>+12 this week</small></div>
+      </div>
+      <div class="sstat match-stat">
+        <div class="match-ring-wrap">
+          <svg viewBox="0 0 44 44" class="ring"><circle cx="22" cy="22" r="18" class="ring-bg"/><circle cx="22" cy="22" r="18" class="ring-fg"/></svg>
+          <b>92%</b>
+        </div>
+        <div><h4>AI Match Score</h4><strong style="font-size:.9rem">Security Guard</strong><small>your top match</small></div>
+      </div>
+    </div>
+
+    <div class="sgrid">
+
+      <!-- LEFT: applications + recommended -->
+      <section class="sleft">
+
+        <!-- APPLICATIONS TRACKER -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>My Applications</h3>
+            <select class="mini-select" id="appFilter">
+              <option value="all">All Status</option>
+              <option value="Applied">Applied</option>
+              <option value="Viewed">Viewed</option>
+              <option value="Shortlisted">Shortlisted</option>
+              <option value="Interview">Interview</option>
+              <option value="Selected">Selected</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+          <div class="app-list" id="appList"></div>
+        </div>
+
+        <!-- SAVED JOBS -->
+        <div class="panel" id="savedPanel">
+          <div class="panel-head">
+            <h3><i class="fa-solid fa-heart" style="color:#ec4899"></i> Saved Jobs <b class="saved-count-chip" id="savedCountChip">0</b></h3>
+            <a class="panel-link" href="index.html">Find More Jobs</a>
+          </div>
+          <div class="saved-list" id="savedList"></div>
+        </div>
+
+        <!-- MESSAGES -->
+        <div class="panel" id="messagesPanel">
+          <div class="panel-head">
+            <h3><i class="fa-regular fa-comment-dots" style="color:#3b82f6"></i> Messages <b class="msg-count-chip" id="msgCountChip">0</b></h3>
+          </div>
+          <div class="msg-list" id="msgList"></div>
+        </div>
+
+        <!-- MY RESUME -->
+        <div class="panel" id="resumePanel">
+          <div class="panel-head">
+            <h3><i class="fa-regular fa-id-card" style="color:#1a6cf5"></i> My Resume <b class="resume-score-chip" id="resumeScoreChip">0%</b></h3>
+            <div class="resume-head-actions">
+              <button type="button" class="btn-outline resume-sm" id="resumePreviewBtn"><i class="fa-regular fa-eye"></i> Preview</button>
+              <button type="button" class="btn-primary resume-sm" id="resumeSaveBtn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+            </div>
+          </div>
+          <div class="resume-grid">
+            <form class="resume-editor" id="resumeForm"></form>
+            <div class="resume-preview-wrap">
+              <div class="resume-paper" id="resumePreview"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MY PROFILE -->
+        <div class="panel" id="profilePanel">
+          <div class="panel-head">
+            <h3><i class="fa-regular fa-user" style="color:#6366f1"></i> My Profile <b class="profile-pct-chip" id="profilePctChip">0%</b></h3>
+            <button type="button" class="btn-primary profile-sm" id="profileSaveBtn"><i class="fa-solid fa-floppy-disk"></i> Save Profile</button>
+          </div>
+          <div class="profile-layout">
+            <div class="profile-left">
+              <div class="profile-hero" id="profileHero"></div>
+              <form class="profile-form" id="profileForm"></form>
+            </div>
+            <div class="profile-right">
+              <div class="profile-preview-card" id="profilePreview"></div>
+              <div class="profile-completion-panel">
+                <div class="panel-head" style="margin-bottom:10px"><h3 style="font-size:.88rem">Profile Strength</h3><b class="pc-pct" id="profilePcPct">0%</b></div>
+                <div class="progress"><div class="progress-fill" id="profilePcBar" style="width:0%"></div></div>
+                <div class="pc-checklist" id="profileChecklist"></div>
+              </div>
+              <div class="profile-stats-grid" id="profileStats"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBSCRIPTION -->
+        <div class="panel" id="subscriptionPanel">
+          <div class="panel-head">
+            <h3><i class="fa-solid fa-crown" style="color:#f59e0b"></i> Subscription</h3>
+          </div>
+          <div class="sub-hero" id="subHero"></div>
+          <div class="sub-plans" id="subPlans"></div>
+          <div class="sub-billing">
+            <div class="sub-billing-head"><strong><i class="fa-regular fa-receipt"></i> Billing History</strong></div>
+            <div class="sub-billing-list" id="subBillingList"></div>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="panel" id="settingsPanel">
+          <div class="panel-head">
+            <h3><i class="fa-solid fa-gear" style="color:#64748b"></i> Settings</h3>
+            <button type="button" class="btn-primary settings-sm" id="settingsSaveBtn"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button>
+          </div>
+          <div class="settings-layout" id="settingsLayout"></div>
+        </div>
+
+        <!-- JOB ALERTS -->
+        <div class="panel" id="jobAlertsPanel">
+          <div class="panel-head">
+            <h3><i class="fa-regular fa-bell" style="color:#f59e0b"></i> Job Alerts <b class="alert-live-chip" id="alertLiveChip">Live</b></h3>
+            <label class="switch alert-switch-top"><input type="checkbox" id="alertToggleMain" checked /><span></span></label>
+          </div>
+          <div class="alert-layout">
+            <form class="alert-settings" id="alertSettingsForm"></form>
+            <div class="alert-matches-wrap">
+              <div class="alert-matches-head">
+                <strong>Matching Jobs Now</strong>
+                <button type="button" class="panel-link" id="alertMarkRead">Mark all read</button>
+              </div>
+              <div class="alert-matches" id="alertMatchesList"></div>
+              <div class="alert-history-head"><strong>Recent Alert History</strong></div>
+              <div class="alert-history" id="alertHistoryList"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI SKILL TESTS -->
+        <div class="panel" id="skillTestsPanel">
+          <div class="panel-head">
+            <h3><i class="fa-solid fa-robot" style="color:#8b5cf6"></i> AI Skill Tests <b class="ai-chip">Powered by JobDozo AI</b></h3>
+          </div>
+          <div class="ai-test-hero">
+            <div class="ai-orb"><i class="fa-solid fa-brain"></i></div>
+            <div>
+              <strong>Adaptive assessments for every candidate</strong>
+              <p>AI personalizes questions from your resume, scores instantly, and shares badges with employers.</p>
+            </div>
+          </div>
+          <div class="skill-test-grid" id="skillTestGrid"></div>
+        </div>
+
+        <!-- RECOMMENDED -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:#1a6cf5"></i> Recommended For You</h3>
+            <a class="panel-link" href="index.html">View All</a>
+          </div>
+          <div class="rec-grid" id="recGrid"></div>
+        </div>
+      </section>
+
+      <!-- RIGHT: widgets -->
+      <aside class="sright">
+
+        <!-- PROFILE COMPLETION WIDGET -->
+        <div class="panel" id="profileWidget">
+          <div class="panel-head"><h3>Profile Completion</h3><b class="pc-pct" id="pcPct">80%</b></div>
+          <div class="progress"><div class="progress-fill" id="pcBar" style="width:80%"></div></div>
+          <div class="pc-checklist" id="pcChecklist"></div>
+          <button class="btn-outline full" id="editProfileBtn" style="margin-top:12px">Edit Profile</button>
+        </div>
+
+        <!-- UPCOMING INTERVIEWS -->
+        <div class="panel" id="interviewPanel">
+          <div class="panel-head"><h3><i class="fa-regular fa-calendar-check" style="color:#8b5cf6"></i> Upcoming Interviews</h3></div>
+          <div id="interviewList"></div>
+        </div>
+
+        <!-- SKILL TESTS WIDGET -->
+        <div class="panel" id="skillWidget">
+          <div class="panel-head"><h3><i class="fa-solid fa-robot" style="color:#8b5cf6"></i> AI Skill Tests</h3><a class="panel-link" id="allTests">View All</a></div>
+          <div class="skill-test" id="skillWidgetList"></div>
+        </div>
+
+        <!-- JOB ALERTS WIDGET -->
+        <div class="panel alert-panel" id="alertWidget">
+          <div class="panel-head"><h3><i class="fa-regular fa-bell" style="color:#f59e0b"></i> Job Alerts</h3><label class="switch"><input type="checkbox" id="alertToggle" checked /><span></span></label></div>
+          <p class="alert-sub" id="alertWidgetSummary">Loading preferences...</p>
+          <button class="btn-outline full" id="editAlertsBtn">Manage Alerts</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="smodal-overlay" id="smodalOverlay">
+  <div class="smodal" id="smodal">
+    <button class="smodal-close" id="smodalClose"><i class="fa-solid fa-xmark"></i></button>
+    <div id="smodalBody"></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/api.js"></script>
+<script src="js/seeker.js"></script>
+</body>
+</html>
