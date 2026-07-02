@@ -45,7 +45,7 @@ export function Sidebar({ mobileOpen, onClose }: { mobileOpen: boolean; onClose:
         <div className="sidebar-boost employer-boost">
           <div>
             <strong>Boost Your Jobs</strong>
-            <small>Get 3× more quality applications</small>
+            <small>Get 3Ã— more quality applications</small>
             <Link href="/subscription" className="boost-btn" onClick={onClose}>Upgrade</Link>
           </div>
           <i className="fa-solid fa-rocket" />
