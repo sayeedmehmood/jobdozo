@@ -8,23 +8,23 @@ services:
       - PORT=8123
       - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
       # Optional: point the data layer at MongoDB instead of the embedded store
-      - MONGODB_URI=mongodb://mongo:27017/JobDozo
+      - MONGODB_URI=mongodb://mongo:27017/Jobdozo
     volumes:
-      - JobDozo-data:/app/server/data
+      - Jobdozo-data:/app/server/data
     depends_on:
       - mongo
     restart: unless-stopped
 
   mongo:
     image: mongo:7
-    container_name: JobDozo-mongo
+    container_name: Jobdozo-mongo
     volumes:
       - mongo-data:/data/db
     restart: unless-stopped
 
   nginx:
     image: nginx:alpine
-    container_name: JobDozo-nginx
+    container_name: Jobdozo-nginx
     ports:
       - "80:80"
     volumes:
