@@ -1,5 +1,5 @@
 {
-  "name": "JobDozo",
+  "name": "jobdozo",
   "version": "1.0.0",
   "description": "JobDozo multi-role job marketplace with real-time sync",
   "main": "server/index.js",
@@ -17,13 +17,27 @@
     "seed": "node -e \"require('./server/seed').reseed()\"",
     "check": "node --check server/index.js && node --check server/routes.js && node --check server/store.js && node --check server/seed.js && node --check server/auth.js"
   },
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "ssh2": "^1.17.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sayeedmehmood/jobdozo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sayeedmehmood/jobdozo/issues"
+  },
+  "homepage": "https://github.com/sayeedmehmood/jobdozo#readme"
 }
