@@ -8,7 +8,7 @@ import { Topbar } from "./Topbar";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { LoginModal } from "@/components/auth/LoginModal";
 import { useAuth } from "@/context/AuthContext";
-import { PortalDataProvider } from "@/context/PortalDataContext";
+import { EmployerDataProvider } from "@/context/EmployerDataContext";
 import { PAGE_TITLES } from "@/lib/nav";
 
 function ShellInner({ children }: { children: React.ReactNode }) {
@@ -56,8 +56,8 @@ function ShellInner({ children }: { children: React.ReactNode }) {
 
 export function PortalShell({ children }: { children: React.ReactNode }) {
   return (
-    <PortalDataProvider>
+    <EmployerDataProvider>
       <ShellInner>{children}</ShellInner>
-    </PortalDataProvider>
+    </EmployerDataProvider>
   );
 }

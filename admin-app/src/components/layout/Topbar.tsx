@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { usePortalData } from "@/context/PortalDataContext";
+import { useEmployerData } from "@/context/EmployerDataContext";
 import { money, timeAgo } from "@/lib/utils";
 import { api } from "@/lib/api";
 
@@ -12,7 +12,7 @@ export function Topbar({ onMenuClick, search, onSearchChange }: {
   onMenuClick: () => void; search: string; onSearchChange: (v: string) => void;
 }) {
   const { user, logout } = useAuth();
-  const { notifications, badges } = usePortalData();
+  const { notifications, badges } = useEmployerData();
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const router = useRouter();
