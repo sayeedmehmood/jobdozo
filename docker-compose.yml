@@ -1,49 +1,38 @@
 ﻿version: "3.9"
 
 services:
-  app:
-    build: .
-    container_name: JobDozo-app
-    environment:
-      - PORT=8123
-      - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
-      - MONGODB_URI=mongodb://mongo:27017/Jobdozo
-    volumes:
-      - Jobdozo-data:/app/server/data
-    depends_on:
-      - mongo
-    restart: unless-stopped
+app:
+build: .
+container_name: JobDozo-app
+environment:
+- PORT=8123
+- JWT_SECRET=${JWT_SECRET:-change-me-in-production}
+# Optional: point the data layer at MongoDB instead of the embedded store
+- MONGODB_URI=mongodb://mongo:27017/Jobdozo
+volumes:
+- Jobdozo-data:/app/server/data
+depends_on:
+- mongo
+restart: unless-stopped
 
-  mongo:
-    image: mongo:7
-    container_name: Jobdozo-mongo
-    volumes:
-      - mongo-data:/data/db
-    restart: unless-stopped
+mongo:
+image: mongo:7
+container_name: Jobdozo-mongo
+volumes:
+- mongo-data:/data/db
+restart: unless-stopped
 
-  caddy:
-    image: caddy:alpine
-    container_name: JobDozo-caddy
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy-data:/data
-      - caddy-config:/config
-    depends_on:
-      - app
-    restart: unless-stopped
+nginx:
+image: nginx:alpine
+container_name: Jobdozo-nginx
+ports:
+- "80:80"
+volumes:
+- ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+depends_on:
+- app
+restart: unless-stopped
 
 volumes:
-  Jobdozo-data:
-  mongo-data:
-  caddy-data:
-  caddy-config:
-  jobdozo.com {
-  reverse_proxy app:8123
-}
-
-www.jobdozo.com {
-  redir https://jobdozo.com{uri} permanent
-}
+Jobdozo-data:
+mongo-data:
