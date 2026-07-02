@@ -35,4 +35,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build Docker image
-        run: docker build -t Jobdozo:ci .
+        run: docker build -t jobdozo:ci .
