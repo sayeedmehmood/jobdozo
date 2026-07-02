@@ -9,6 +9,12 @@ rm -rf /opt/jobdozo
 git clone https://github.com/sayeedmehmood/jobdozo.git /opt/jobdozo
 cd /opt/jobdozo
 npm install
+for app in seeker-app employer-app recruiter-app admin-app super-admin-app; do
+  echo "Installing dependencies for $app..."
+  cd $app
+  npm install
+  cd ..
+done
 npm run build:portals
 pm2 delete jobdozo || true
 pm2 start server/index.js --name "jobdozo" --update-env --env PORT=80
