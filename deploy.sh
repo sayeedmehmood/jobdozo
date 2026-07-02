@@ -11,7 +11,7 @@ cd /opt/jobdozo
 npm install
 npm run build:portals
 pm2 delete jobdozo || true
-pm2 start server/index.js --name "jobdozo" --update-env
+pm2 start server/index.js --name "jobdozo" --update-env --env PORT=80
 pm2 save
 env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u root --hp /root || true
 echo "Deployment successful!"
